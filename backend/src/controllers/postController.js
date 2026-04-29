@@ -1,6 +1,6 @@
 const prisma = require('../../prisma/client');
 
-async function getPublishedPosts(req, res) {
+async function publishedPosts(req, res) {
   const posts = await prisma.post.findMany({
     where: { published: true },
     include: {
@@ -12,7 +12,7 @@ async function getPublishedPosts(req, res) {
   res.json(posts);
 }
 
-async function getPublishedPost(req, res) {
+async function publishedPost(req, res) {
   const post = await prisma.post.findFirst({
     where: { id: Number(req.params.id), published: true },
     include: {
@@ -24,7 +24,7 @@ async function getPublishedPost(req, res) {
   res.json(post);
 }
 
-async function getAllPosts(req, res) {
+async function allPosts(req, res) {
   const posts = await prisma.post.findMany({
     include: {
       author: { select: { username: true } },
@@ -35,7 +35,7 @@ async function getAllPosts(req, res) {
   res.json(posts);
 }
 
-async function getAdminPost(req, res) {
+async function adminPost(req, res) {
   const post = await prisma.post.findUnique({
     where: { id: Number(req.params.id) },
     include: {
@@ -91,10 +91,10 @@ async function togglePublish(req, res) {
 }
 
 module.exports = {
-  getPublishedPosts,
-  getPublishedPost,
-  getAllPosts,
-  getAdminPost,
+  publishedPosts,
+  publishedPost,
+  allPosts,
+  adminPost,
   createPost,
   updatePost,
   deletePost,
